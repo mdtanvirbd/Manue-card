@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পেমেন্ট</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>পেমেন্ট পদ্ধতি</h1>
+        <a href="index.html" class="home-link">🏠 হোম</a>
+    </header>
+
+    <div class="payment-container">
+        <h2 class="total-price">মোট: ৳0</h2>
+
+        <form>
+            <label for="payment-method">পেমেন্ট মেথড:</label>
+            <select id="payment-method">
+                <option value="bkash">বিকাশ</option>
+                <option value="rocket">রকেট</option>
+                <option value="nagad">নগদ</option>
+            </select>
+
+            <label for="number">আপনার নম্বর:</label>
+            <input type="text" id="number" placeholder="আপনার পেমেন্ট নম্বর" required>
+
+            <button type="submit" class="payment-btn" onclick="confirmPayment(event)">✅ পেমেন্ট করুন</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector('.total-price').innerText = `মোট: ৳${localStorage.getItem('total')}`;
+        });
+
+        function confirmPayment(event) {
+            event.preventDefault();
+            const method = document.getElementById('payment-method').value;
+            const number = document.getElementById('number').value;
+
+            if (!number) {
+                alert("দয়া করে আপনার পেমেন্ট নম্বর প্রদান করুন!");
+                return;
+            }
+
+            alert(`পেমেন্ট সফল হয়েছে!\nপেমেন্ট মেথড: ${method}\nনম্বর: ${number}`);
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

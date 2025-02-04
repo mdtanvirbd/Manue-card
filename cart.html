@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+        .cart-item .details {
+            flex: 1;
+            margin-left: 10px;
+        }
+        .cart-item .delete {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .cart-item .quantity {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Your Cart</h2>
+    <div class="cart-container"></div>
+    <div class="total-price"></div>
+    <a href="payment.html"><button>Proceed to Payment</button></a>
+
+    <script>
+        // Retrieve cart data from localStorage
+        function displayCart() {
+            const cartContainer = document.querySelector('.cart-container');
+            const totalPriceContainer = document.querySelector('.total-price');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = 0;
+
+            cartContainer.innerHTML = ''; // Clear the container first
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+                cartItemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="details">
+                        <h3>${item.name}</h3>
+                        <p>Quantity: ${item.quantity}</p>
+                        <p>Price: ৳${item.price}</p>
+                    </div>
+                    <div class="quantity">
+                        <button onclick="decreaseQuantity(${item.id})">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="increaseQuantity(${item.id})">+</button>
+                    </div>
+                    <button class="delete" onclick="deleteItem(${item.id})">Delete</button>
+                `;
+                cartContainer.appendChild(cartItemDiv);
+            });
+
+            totalPriceContainer.innerHTML = `<h3>Total Price: ৳${total}</h3>`;
+        }
+
+        // Delete item from the cart
+        function deleteItem(itemId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.id !== itemId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart(); // Re-display the updated cart
+        }
+
+        // Decrease item quantity
+        function decreaseQuantity(itemId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            if (itemIndex > -1 && cart[itemIndex].quantity > 1) {
+                cart[itemIndex].quantity--;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCart(); // Re-display the updated cart
+            }
+        }
+
+        // Increase item quantity
+        function increaseQuantity(itemId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            if (itemIndex > -1) {
+                cart[itemIndex].quantity++;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCart(); // Re-display the updated cart
+            }
+        }
+
+        // Call displayCart on page load to show the cart
+        document.addEventListener('DOMContentLoaded', displayCart);
+    </script>
+</body>
+</html>
