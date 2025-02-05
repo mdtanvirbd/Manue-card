@@ -4,6 +4,10 @@ function calculateCartTotal() {
     cart.forEach(item => {
         total += item.price * item.quantity;  // Calculate price * quantity
     });
+    
+    // Store total in localStorage for the payment page
+    localStorage.setItem('totalAmount', total);
+    
     return total;
 }
 

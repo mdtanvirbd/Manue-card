@@ -4,10 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>পেমেন্ট</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header styling */
+        .header {
+            background-color: #3498db;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .home-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        /* Payment container styling */
+        .payment-container {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .total-price {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        select, input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            width: 100%;
+        }
+
+        select:focus, input:focus {
+            border-color: #3498db;
+        }
+
+        /* Button styling */
+        .payment-btn {
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .payment-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .payment-container {
+                margin: 20px;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .total-price {
+                font-size: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
+    <header class="header">
         <h1>পেমেন্ট পদ্ধতি</h1>
         <a href="index.html" class="home-link">🏠 হোম</a>
     </header>
@@ -15,9 +118,9 @@
     <div class="payment-container">
         <h2 class="total-price">মোট: ৳0</h2>
 
-        <form>
+        <form id="payment-form">
             <label for="payment-method">পেমেন্ট মেথড:</label>
-            <select id="payment-method">
+            <select id="payment-method" required>
                 <option value="bkash">বিকাশ</option>
                 <option value="rocket">রকেট</option>
                 <option value="nagad">নগদ</option>
@@ -26,7 +129,7 @@
             <label for="number">আপনার নম্বর:</label>
             <input type="text" id="number" placeholder="আপনার পেমেন্ট নম্বর" required>
 
-            <button type="submit" class="payment-btn" onclick="confirmPayment(event)">✅ পেমেন্ট করুন</button>
+            <button type="submit" class="payment-btn">✅ পেমেন্ট করুন</button>
         </form>
     </div>
 
@@ -35,7 +138,7 @@
             document.querySelector('.total-price').innerText = `মোট: ৳${localStorage.getItem('total')}`;
         });
 
-        function confirmPayment(event) {
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const method = document.getElementById('payment-method').value;
             const number = document.getElementById('number').value;
@@ -45,10 +148,16 @@
                 return;
             }
 
-            alert(`পেমেন্ট সফল হয়েছে!\nপেমেন্ট মেথড: ${method}\nনম্বর: ${number}`);
-            localStorage.clear();
-            window.location.href = "index.html";
-        }
+            if (method === "bkash") {
+                // Redirect to Bkash Payment URL (simulate the redirect process)
+                const paymentUrl = `https://www.bkash.com/payment?amount=${localStorage.getItem('total')}&number=${number}`;
+                window.location.href = paymentUrl;
+            } else {
+                alert(`পেমেন্ট সফল হয়েছে!\nপেমেন্ট মেথড: ${method}\nনম্বর: ${number}`);
+                localStorage.clear();
+                window.location.href = "index.html";
+            }
+        });
     </script>
 </body>
 </html>
