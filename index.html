@@ -1,19 +1,48 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>রেস্টুরেন্ট মেনু</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>রেস্টুরেন্ট মেনু</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .membership-links {
+      background: #fefefe;
+      text-align: center;
+      padding: 10px;
+      margin-top: -10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .membership-links a {
+      text-decoration: none;
+      color: #ff5e62;
+      font-weight: bold;
+      margin: 0 12px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+    .membership-links a:hover {
+      background: #ff5e62;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>রেস্টুরেন্ট মেনু</h1>
-        <a href="cart.html" class="cart-link">🛒 Cart</a>
-    </header>
 
-    <div class="menu-items"></div>
+  <header>
+    <h1>রেস্টুরেন্ট মেনু</h1>
+    <a href="cart.html" class="cart-link">🛒 Cart</a>
+  </header>
 
-    <script src="script.js"></script>
+  <!-- 👇 Membership buttons right below the header -->
+  <div class="membership-links">
+    <a href="register.php">✍️ Become a Member</a>
+    <a href="login.php">🔐 Login</a>
+  </div>
+
+  <div class="menu-items"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
